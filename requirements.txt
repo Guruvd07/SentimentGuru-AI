@@ -1,0 +1,8 @@
+Flask
+pandas
+google-api-python-client
+python-dotenv
+emoji
+nltk
+transformers
+torch

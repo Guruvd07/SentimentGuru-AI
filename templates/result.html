@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis Report - Sentiment Guru</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#059669',
+                        secondary: '#10b981',
+                        accent: '#84cc16',
+                        muted: '#f1f5f9',
+                        'muted-foreground': '#475569'
+                    },
+                    fontFamily: {
+                        'display': ['Playfair Display', 'serif'],
+                        'sans': ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Enhanced animations and professional styling */
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        .animate-slide-up { animation: slideInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+        .animate-fade-in { animation: fadeIn 1s ease-out; }
+        .animate-scale-in { animation: scaleIn 0.6s ease-out; }
+        .animate-slide-left { animation: slideInLeft 0.7s ease-out; }
+        .animate-slide-right { animation: slideInRight 0.7s ease-out; }
+        .animate-pulse-custom { animation: pulse 2s ease-in-out infinite; }
+        
+        .glass-effect {
+            backdrop-filter: blur(25px);
+            background: rgba(255, 255, 255, 0.98);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #059669, #10b981, #84cc16);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+        
+        .hover-lift {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .stagger-animation {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideInUp 0.6s ease-out forwards;
+        }
+        
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+        .stagger-4 { animation-delay: 0.4s; }
+        .stagger-5 { animation-delay: 0.5s; }
+        .stagger-6 { animation-delay: 0.6s; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-50 via-white to-emerald-50 min-h-screen">
+    <!-- Enhanced header with slide animation -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-effect border-b border-gray-200 animate-slide-left">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-r from-primary to-secondary rounded-xl flex items-center justify-center text-white font-bold text-lg">
+                        SG
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">Sentiment Guru</h1>
+                        <p class="text-xs text-muted-foreground uppercase tracking-wide">AI Analytics Platform</p>
+                    </div>
+                </div>
+                <a href="/" class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary/90 transition-colors flex items-center space-x-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    <span>New Analysis</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Enhanced main content with staggered animations -->
+    <main class="pt-20 pb-12">
+        <div class="max-w-7xl mx-auto px-6 space-y-8">
+            <!-- Enhanced video header with better animations -->
+            <section class="glass-effect rounded-3xl p-8 shadow-xl animate-fade-in hover-lift">
+                <div class="grid lg:grid-cols-3 gap-8 items-center">
+                    <div class="lg:col-span-1 animate-scale-in">
+                        <div class="relative group">
+                            <img src="{{ video_info.thumbnail }}" alt="Video Thumbnail" class="w-full rounded-2xl shadow-lg group-hover:shadow-2xl transition-all duration-500 hover:scale-105">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
+                                <div class="w-20 h-20 bg-white/95 rounded-full flex items-center justify-center animate-pulse-custom">
+                                    <svg class="w-10 h-10 text-primary ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M8 5v14l11-7z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="lg:col-span-2 space-y-6 animate-slide-right">
+                        <div>
+                            <h1 class="text-3xl lg:text-4xl font-display font-bold text-gray-900 mb-4 leading-tight">
+                                {{ video_info.title }}
+                            </h1>
+                            <div class="flex flex-wrap gap-3">
+                                <span class="inline-flex items-center px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium hover-lift">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 00-2-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                    </svg>
+                                    Sentiment Analysis Complete
+                                </span>
+                                <span class="inline-flex items-center px-4 py-2 bg-secondary/10 text-secondary rounded-full text-sm font-medium hover-lift">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                    </svg>
+                                    AI-Powered Analysis
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <!-- Enhanced rating showcase with better animations -->
+                        <div class="bg-gradient-to-r from-primary via-secondary to-accent rounded-2xl p-8 text-white text-center relative overflow-hidden animate-pulse-custom">
+                            <div class="absolute inset-0 bg-gradient-to-r from-secondary via-accent to-primary opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
+                            <div class="relative z-10">
+                                <div class="text-7xl font-bold mb-2">{{ rating }}<span class="text-4xl opacity-80">/10</span></div>
+                                <div class="text-2xl font-semibold opacity-90 mb-4">Predicted Audience Rating</div>
+                                <div class="flex justify-center mt-4 space-x-1">
+                                    {% for i in range(5) %}
+                                        <svg class="w-8 h-8 text-yellow-300 hover:scale-125 transition-transform duration-200" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                        </svg>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Enhanced analytics dashboard with staggered animations -->
+            <section class="grid lg:grid-cols-4 gap-6">
+                <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover-lift stagger-animation stagger-1">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-14 h-14 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center animate-pulse-custom">
+                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path>
+                            </svg>
+                        </div>
+                        <span class="text-sm text-gray-500 font-medium">Total</span>
+                    </div>
+                    <div class="text-4xl font-bold text-gray-900 mb-1">{{ total }}</div>
+                    <div class="text-sm text-gray-600 font-medium">Comments Analyzed</div>
+                    <div class="mt-3 text-xs text-blue-600 font-semibold bg-blue-50 px-2 py-1 rounded-full inline-block">100% Coverage</div>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover-lift stagger-animation stagger-2">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-14 h-14 bg-gradient-to-r from-green-500 to-green-600 rounded-xl flex items-center justify-center animate-pulse-custom" style="animation-delay: 0.5s;">
+                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1.01M15 10h1.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <span class="text-sm text-gray-500 font-medium">Positive</span>
+                    </div>
+                    <div class="text-4xl font-bold text-green-600 mb-1">{{ pos }}</div>
+                    <div class="text-sm text-gray-600 font-medium">Positive Comments</div>
+                    <div class="mt-3 text-xs text-green-600 font-semibold bg-green-50 px-2 py-1 rounded-full inline-block">{{ "%.1f"|format((pos/total)*100) }}% of total</div>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover-lift stagger-animation stagger-3">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-14 h-14 bg-gradient-to-r from-red-500 to-red-600 rounded-xl flex items-center justify-center animate-pulse-custom" style="animation-delay: 1s;">
+                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                        </div>
+                        <span class="text-sm text-gray-500 font-medium">Negative</span>
+                    </div>
+                    <div class="text-4xl font-bold text-red-600 mb-1">{{ neg }}</div>
+                    <div class="text-sm text-gray-600 font-medium">Negative Comments</div>
+                    <div class="mt-3 text-xs text-red-600 font-semibold bg-red-50 px-2 py-1 rounded-full inline-block">{{ "%.1f"|format((neg/total)*100) }}% of total</div>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover-lift stagger-animation stagger-4">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-14 h-14 bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-xl flex items-center justify-center animate-pulse-custom" style="animation-delay: 1.5s;">
+                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <span class="text-sm text-gray-500 font-medium">Neutral</span>
+                    </div>
+                    <div class="text-4xl font-bold text-yellow-600 mb-1">{{ neu }}</div>
+                    <div class="text-sm text-gray-600 font-medium">Neutral Comments</div>
+                    <div class="mt-3 text-xs text-yellow-600 font-semibold bg-yellow-50 px-2 py-1 rounded-full inline-block">{{ "%.1f"|format((neu/total)*100) }}% of total</div>
+                </div>
+            </section>
+
+            <!-- Enhanced insights and chart section -->
+            <section class="grid lg:grid-cols-2 gap-8">
+                <!-- AI Insights -->
+                <div class="glass-effect rounded-3xl p-8 shadow-xl hover-lift stagger-animation stagger-5">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-r from-primary to-secondary rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                            </svg>
+                        </div>
+                        <h2 class="text-2xl font-display font-bold text-gray-900">AI Insights</h2>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-6 border-l-4 border-primary">
+                        <div class="space-y-4">
+                            {% if rating >= 8 %}
+                                <h3 class="text-lg font-semibold text-gray-900">🎉 Exceptional Performance</h3>
+                                <p class="text-gray-700 leading-relaxed">
+                                    This video demonstrates outstanding audience engagement with <strong>{{ "%.1f"|format((pos/total)*100) }}%</strong> positive sentiment. The content resonates exceptionally well with viewers, indicating high-quality production and relevant messaging. This level of positive reception suggests strong potential for viral growth and sustained engagement.
+                                </p>
+                            {% elif rating >= 6.5 %}
+                                <h3 class="text-lg font-semibold text-gray-900">👍 Strong Performance</h3>
+                                <p class="text-gray-700 leading-relaxed">
+                                    The video shows solid audience approval with <strong>{{ "%.1f"|format((pos/total)*100) }}%</strong> positive sentiment. While there's room for improvement, the overall reception is favorable. Consider analyzing the <strong>{{ "%.1f"|format((neg/total)*100) }}%</strong> negative feedback to identify areas for content optimization.
+                                </p>
+                            {% elif rating >= 5 %}
+                                <h3 class="text-lg font-semibold text-gray-900">⚖️ Mixed Reception</h3>
+                                <p class="text-gray-700 leading-relaxed">
+                                    The video receives balanced but varied feedback from the audience. With <strong>{{ "%.1f"|format((pos/total)*100) }}%</strong> positive sentiment, there's significant opportunity to enhance content strategy. The feedback provides valuable insights for future improvements.
+                                </p>
+                            {% else %}
+                                <h3 class="text-lg font-semibold text-gray-900">📈 Improvement Opportunity</h3>
+                                <p class="text-gray-700 leading-relaxed">
+                                    The video shows challenging audience reception with <strong>{{ "%.1f"|format((neg/total)*100) }}%</strong> negative sentiment. This presents a valuable learning opportunity to understand audience preferences and refine content strategy for better engagement.
+                                </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Chart Section -->
+                <div class="glass-effect rounded-3xl p-8 shadow-xl hover-lift stagger-animation stagger-6">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-r from-secondary to-accent rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                            </svg>
+                        </div>
+                        <h2 class="text-2xl font-display font-bold text-gray-900">Sentiment Distribution</h2>
+                    </div>
+                    
+                    <div class="relative h-80">
+                        <canvas id="sentimentChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Enhanced comments analysis with better animations -->
+            <section class="glass-effect rounded-3xl p-8 shadow-xl hover-lift animate-slide-up">
+                <div class="flex items-center space-x-3 mb-8">
+                    <div class="w-14 h-14 bg-gradient-to-r from-accent to-primary rounded-xl flex items-center justify-center animate-pulse-custom">
+                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-3xl font-display font-bold gradient-text">Representative Comments</h2>
+                </div>
+                
+                <div class="grid gap-6">
+                    {% for c in comments %}
+                        <div class="bg-white rounded-2xl p-6 shadow-lg border-l-4 
+                            {% if c.sentiment.lower() == 'positive' %}border-green-500
+                            {% elif c.sentiment.lower() == 'negative' %}border-red-500
+                            {% else %}border-yellow-500{% endif %} 
+                            hover:shadow-2xl hover:scale-105 transition-all duration-300 hover-lift">
+                            
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex-1">
+                                    <p class="text-gray-800 text-lg leading-relaxed mb-4 font-medium">{{ c.text }}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between">
+                                <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold
+                                    {% if c.sentiment.lower() == 'positive' %}bg-green-100 text-green-800 hover:bg-green-200
+                                    {% elif c.sentiment.lower() == 'negative' %}bg-red-100 text-red-800 hover:bg-red-200
+                                    {% else %}bg-yellow-100 text-yellow-800 hover:bg-yellow-200{% endif %} 
+                                    transition-colors duration-200">
+                                    {% if c.sentiment.lower() == 'positive' %}😊 Positive
+                                    {% elif c.sentiment.lower() == 'negative' %}😞 Negative
+                                    {% else %}😐 Neutral{% endif %}
+                                </span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const ctx = document.getElementById('sentimentChart').getContext('2d');
+        
+        const chartData = {
+            labels: ['Positive', 'Negative', 'Neutral'],
+            datasets: [{
+                data: [{{ pos }}, {{ neg }}, {{ neu }}],
+                backgroundColor: [
+                    'rgba(16, 185, 129, 0.9)',
+                    'rgba(239, 68, 68, 0.9)',
+                    'rgba(245, 158, 11, 0.9)'
+                ],
+                borderColor: [
+                    '#10b981',
+                    '#ef4444',
+                    '#f59e0b'
+                ],
+                borderWidth: 4,
+                hoverBackgroundColor: [
+                    '#059669',
+                    '#dc2626',
+                    '#d97706'
+                ],
+                hoverBorderWidth: 6,
+                hoverOffset: 15
+            }]
+        };
+
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: chartData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 25,
+                            font: {
+                                size: 16,
+                                weight: '700',
+                                family: 'Inter'
+                            },
+                            color: '#374151',
+                            usePointStyle: true,
+                            pointStyle: 'circle'
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(17, 24, 39, 0.98)',
+                        titleColor: 'white',
+                        bodyColor: 'white',
+                        borderColor: 'rgba(255, 255, 255, 0.2)',
+                        borderWidth: 2,
+                        cornerRadius: 16,
+                        displayColors: true,
+                        titleFont: { size: 18, weight: '700' },
+                        bodyFont: { size: 16, weight: '600' },
+                        callbacks: {
+                            label: function(context) {
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percentage = ((context.parsed / total) * 100).toFixed(1);
+                                return `${context.label}: ${context.parsed} comments (${percentage}%)`;
+                            }
+                        }
+                    }
+                },
+                cutout: '60%',
+                animation: {
+                    animateRotate: true,
+                    animateScale: true,
+                    duration: 2000,
+                    easing: 'easeOutQuart'
+                }
+            }
+        });
+
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const animatedElements = document.querySelectorAll('.stagger-animation, .animate-slide-up, .animate-fade-in');
+            animatedElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'all 1s cubic-bezier(0.4, 0, 0.2, 1)';
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
