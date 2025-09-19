@@ -6,3 +6,4 @@ emoji
 nltk
 transformers
 torch
+gunicorn
