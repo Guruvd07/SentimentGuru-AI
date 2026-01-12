@@ -10,14 +10,23 @@ Displays results on a beautiful website with video preview, sentiment distributi
 🌟 Features
 
 ✅ Paste YouTube video link → Instant analysis
+
 ✅ Shows video preview with title
+
 ✅ Generates rating out of 10 based on sentiment score
+
 ✅ Categorizes comments: Positive / Neutral / Negative
+
 ✅ Displays total comments + count of each sentiment
+
 ✅ Interactive UI built with HTML + CSS + JavaScript
+
 ✅ Backend powered by Flask
+
 ✅ NLP using Transformers (Hugging Face)
+
 ✅ Free deployment on Hugging Face Spaces
+
 🛠️ Tech Stack
 
 Frontend: HTML, CSS, JavaScript
