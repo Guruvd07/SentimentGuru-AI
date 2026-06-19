@@ -1,4 +1,4 @@
-🎥 SentimentGuru AI – YouTube Comment Sentiment Analysis
+# 🎥 SentimentGuru AI – YouTube Comment Sentiment Analysis
 📌 Overview
 
 SentimentGuru AI is a full-stack web app that analyzes YouTube comments and classifies them as Positive, Neutral, or Negative.
